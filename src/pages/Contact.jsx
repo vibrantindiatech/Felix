@@ -17,7 +17,7 @@ const Contact = () => {
     const bgRef = useRef(null);
 
     const [status, setStatus] = useState('idle'); // idle, loading, success, error
-    const [formData, setFormData] = useState({
+    const initialState = {
         name: '',
         passport: '',
         email: '',
@@ -25,7 +25,9 @@ const Contact = () => {
         visaCategory: 'Student Visa',
         destination: targetCountry,
         message: ''
-    });
+    };
+
+    const [formData, setFormData] = useState(initialState);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -93,14 +95,28 @@ const Contact = () => {
         setStatus('loading');
 
         try {
-            // Construct WhatsApp Message
+            // Construct Professional WhatsApp Message Template
             const whatsappNumber = "7069412729";
-            const message = `*New Contact Inquiry - Felix by Sagar*%0A%0A` +
-                `*Name:* ${formData.name}%0A` +
-                `*Email:* ${formData.email}%0A` +
-                `*Phone:* ${formData.phone}%0A` +
-                `*Destination:* ${formData.destination}%0A` +
-                `*Message:* ${formData.message}`;
+
+            // Highly readable, professional WhatsApp message structure
+            const message =
+                `🚀 FELIX BY SAGAR - OFFICIAL INQUIRY%0A%0A` +
+                `----------------------------------%0A%0A` +
+                `👤 CUSTOMER PROFILE%0A%0A` +
+                `NAME: ${formData.name.toUpperCase()}%0A` +
+                `EMAIL: ${formData.email}%0A` +
+                `PHONE: ${formData.phone}%0A%0A%0A` +
+
+                `📍 SERVICE DETAILS%0A%0A` +
+                `VISA TYPE: ${formData.visaCategory}%0A` +
+                `DESTINATION: ${formData.destination}%0A%0A%0A` +
+
+                `📝 CLIENT MESSAGE%0A%0A` +
+                `"${formData.message || "No additional details provided."}"%0A%0A%0A` +
+
+                `----------------------------------%0A%0A` +
+                `SENT ON: ${new Date().toLocaleString()}%0A` +
+                `Felix Visa Solutions - Official Website`;
 
             const whatsappUrl = `https://wa.me/91${whatsappNumber}?text=${message}`;
 
@@ -115,12 +131,15 @@ const Contact = () => {
             setTimeout(() => {
                 setStatus('success');
                 gsap.fromTo(".success-overlay", { opacity: 0, scale: 0.8, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.7)" });
+
+                // Open WhatsApp in new tab
                 window.open(whatsappUrl, '_blank');
 
-                // Auto-refresh the page after 3 seconds so new details can be entered
+                // Reset the form data and set status back to idle after 2 seconds
                 setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
+                    setFormData(initialState);
+                    setStatus('idle');
+                }, 2000);
             }, 1000);
 
         } catch (error) {

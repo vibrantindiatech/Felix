@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import ConsultationModal from './ConsultationModal';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -58,12 +60,12 @@ const Navbar = () => {
 
                 {/* CTA Button */}
                 <div className="hidden lg:block">
-                    <NavLink
-                        to="/contact"
+                    <button
+                        onClick={() => setIsModalOpen(true)}
                         className="px-6 py-2 border border-accent text-accent hover:bg-accent hover:text-primary transition-all duration-300 rounded text-sm uppercase tracking-wide font-medium"
                     >
                         Get Consultation
-                    </NavLink>
+                    </button>
                 </div>
 
                 {/* Mobile Menu Toggle */}
@@ -87,15 +89,23 @@ const Navbar = () => {
                             {link.title}
                         </NavLink>
                     ))}
-                    <NavLink
-                        to="/contact"
-                        onClick={() => setIsOpen(false)}
+                    <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            setIsModalOpen(true);
+                        }}
                         className="px-8 py-3 bg-accent text-primary font-bold uppercase tracking-wide rounded hover:bg-white transition-colors"
                     >
                         Get Consultation
-                    </NavLink>
+                    </button>
                 </div>
             )}
+
+            {/* Consultation Modal */}
+            <ConsultationModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
         </nav>
     );
 };

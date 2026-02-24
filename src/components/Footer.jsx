@@ -32,30 +32,6 @@ const Footer = () => {
 
     return (
         <footer ref={footerRef} className="bg-[#050f1e] text-gray-300 relative overflow-hidden border-t border-white/5">
-            {/* Newsletter Section */}
-            <div className="border-b border-white/5 bg-white/[0.02]">
-                <div className="container mx-auto px-4 md:px-6 py-10">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                        <div className="md:w-1/2 text-center md:text-left">
-                            <h3 className="text-xl md:text-2xl font-heading font-bold text-white mb-2">Subscribe to our Newsletter</h3>
-                            <p className="text-gray-400 font-light text-sm">Get the latest immigration updates and success stories directly to your inbox.</p>
-                        </div>
-                        <div className="md:w-1/2 w-full max-w-md">
-                            <form className="flex shadow-lg rounded-lg overflow-hidden" onSubmit={(e) => e.preventDefault()}>
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    className="w-full px-5 py-3 bg-white/5 border border-white/10 text-white focus:outline-none focus:bg-white/10 transition-colors placeholder:text-gray-500"
-                                />
-                                <button className="bg-accent text-primary px-6 py-3 font-bold hover:bg-white transition-colors flex items-center">
-                                    <span className="hidden sm:inline mr-2">Subscribe</span> <Send size={18} />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div className="container mx-auto px-4 md:px-6 pt-16 pb-8 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
                     {/* Brand Column */}
@@ -161,9 +137,8 @@ const Footer = () => {
                 <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-light tracking-wide">
                     <p>&copy; {new Date().getFullYear()} Felix by Sagar. All rights reserved.</p>
                     <div className="flex space-x-6 mt-4 md:mt-0">
-                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                        <a href="#" className="hover:text-white transition-colors">Sitemap</a>
+                        <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
                     </div>
                 </div>
             </div>

@@ -11,6 +11,8 @@ import Contact from './pages/Contact';
 import BlogPage from './pages/BlogPage';
 import WhyUsPage from './pages/WhyUsPage';
 import TestimonialsPage from './pages/TestimonialsPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 import NotFound from './pages/NotFound';
 import ScrollToTop from './components/ScrollToTop';
 import TitleUpdater from './components/TitleUpdater';
@@ -38,6 +40,8 @@ const App = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="blog" element={<BlogPage />} />
           <Route path="eligibility" element={<EligibilityAnalysis />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-service" element={<TermsOfService />} />
 
           {/* Fallback */}
           <Route path="*" element={<NotFound />} />

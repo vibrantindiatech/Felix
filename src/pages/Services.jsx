@@ -10,42 +10,42 @@ const services = [
     {
         title: 'Study Visa',
         description: 'Expert guidance for university selection, application, and student visa processing for top destinations like USA, UK, Canada, and Australia.',
-        icon: <GraduationCap size={40} className="text-accent" />,
+        icon: <GraduationCap size={28} />,
         path: '/services/study',
         image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Work Visa',
         description: 'Comprehensive support for skilled workers, employer-sponsored visas, and temporary work permits to advance your international career.',
-        icon: <Briefcase size={40} className="text-accent" />,
+        icon: <Briefcase size={28} />,
         path: '/services/work',
         image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Tourist Visa',
         description: 'Hassle-free tourist visa services for individuals, families, and groups. Explore the world with confidence and ease.',
-        icon: <Plane size={40} className="text-accent" />,
+        icon: <Plane size={28} />,
         path: '/services/tourist',
         image: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Business Visa',
         description: 'Specialized visa solutions for entrepreneurs, investors, and business professionals looking to expand globally.',
-        icon: <Building2 size={40} className="text-accent" />,
+        icon: <Building2 size={28} />,
         path: '/services/business',
         image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=2671&auto=format&fit=crop'
     },
     {
         title: 'Permanent Residency',
         description: 'Navigate the complex PR pathways with our expert consultants. Secure your future in your dream country.',
-        icon: <UserPlus size={40} className="text-accent" />,
+        icon: <UserPlus size={28} />,
         path: '/services/pr',
         image: 'https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Family Sponsorship',
         description: 'Reunite with your loved ones. We assist with spousal, parent, and child sponsorship applications.',
-        icon: <FileText size={40} className="text-accent" />,
+        icon: <FileText size={28} />,
         path: '/contact',
         image: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=2670&auto=format&fit=crop'
     }
@@ -119,8 +119,10 @@ const Services = () => {
                                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                                 />
                                 <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-colors duration-500"></div>
-                                <div className="absolute top-4 right-4 bg-white/10 backdrop-blur-md p-3 rounded-xl border border-white/10 group-hover:bg-accent group-hover:text-primary text-white transition-all duration-300">
-                                    {service.icon}
+                                <div className="absolute top-6 right-6 z-20 transition-all duration-500 transform group-hover:scale-110">
+                                    <div className="bg-primary/60 backdrop-blur-xl p-3.5 rounded-2xl border border-white/10 text-accent shadow-2xl group-hover:bg-accent group-hover:text-primary group-hover:border-white/20 transition-all duration-300">
+                                        {service.icon}
+                                    </div>
                                 </div>
                             </div>
 
