@@ -12,7 +12,7 @@ const services = [
         description: 'Expert guidance for university selection, application, and student visa processing for top destinations like USA, UK, Canada, and Australia.',
         icon: <GraduationCap size={40} className="text-accent" />,
         path: '/services/study',
-        image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=2670&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Work Visa',

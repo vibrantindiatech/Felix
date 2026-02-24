@@ -5,7 +5,7 @@ export const serviceData = {
     study: {
         title: "Study Visa",
         subtitle: "Unlock Global Education Opportunities",
-        heroImage: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2670&auto=format&fit=crop",
+        heroImage: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop",
         overview: "Studying abroad is a life-changing experience that opens doors to improved career prospects and personal growth. At Felix by Sagar, we guide you through every step of your international education journey.",
         benefits: [
             { title: "World-Class Education", description: "Access top-ranked universities and colleges globally." },

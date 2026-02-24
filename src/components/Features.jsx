@@ -12,7 +12,7 @@ const services = [
         description: 'Comprehensive guidance for university selection, application, and student visa processing for top destinations.',
         icon: <GraduationCap size={32} />,
         path: '/services/study',
-        image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop'
+        image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop'
     },
     {
         title: 'Work Visa',
