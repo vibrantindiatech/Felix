@@ -153,28 +153,27 @@ const Contact = () => {
 
             <section className="container mx-auto px-4 md:px-6 pb-24 relative z-10">
                 <div className="flex flex-col lg:flex-row gap-12 max-w-7xl mx-auto items-start">
-                    <div ref={infoRef} className="lg:w-1/3 space-y-8">
-                        <div className="contact-card bg-white/5 border border-white/10 p-8 rounded-3xl flex items-start gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group">
-                            <div className="p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><Phone size={28} /></div>
+                    <div ref={infoRef} className="lg:w-1/3 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6 lg:space-y-8">
+                        <div className="contact-card bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl flex items-start gap-4 md:gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group">
+                            <div className="p-3 md:p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><Phone size={24} className="md:w-7 md:h-7" /></div>
                             <div>
-                                <h3 className="text-xl font-black text-white mb-1 uppercase tracking-tight">Direct Comms</h3>
-                                <p className="text-gray-400 font-light">+91 97149 11022</p>
+                                <h3 className="text-lg md:text-xl font-black text-white mb-1 uppercase tracking-tight">Direct Comms</h3>
+                                <p className="text-gray-400 font-light text-sm md:text-base">+91 97149 11022</p>
                             </div>
                         </div>
-                        <div className="contact-card bg-white/5 border border-white/10 p-8 rounded-3xl flex items-start gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group">
-                            <div className="p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><Mail size={28} /></div>
+                        <div className="contact-card bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl flex items-start gap-4 md:gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group">
+                            <div className="p-3 md:p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><Mail size={24} className="md:w-7 md:h-7" /></div>
                             <div>
-                                <h3 className="text-xl font-black text-white mb-1 uppercase tracking-tight">Mission Intel</h3>
-                                <p className="text-gray-400 font-light text-sm md:text-base">felixbysagar@gmail.com</p>
+                                <h3 className="text-lg md:text-xl font-black text-white mb-1 uppercase tracking-tight">Mission Intel</h3>
+                                <p className="text-gray-400 font-light text-xs md:text-base">felixbysagar@gmail.com</p>
                             </div>
                         </div>
-                        <div className="contact-card bg-white/5 border border-white/10 p-8 rounded-3xl flex items-start gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group">
-                            <div className="p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><MapPin size={28} /></div>
+                        <div className="contact-card bg-white/5 border border-white/10 p-6 md:p-8 rounded-3xl flex items-start gap-4 md:gap-6 hover:border-accent/40 transition-colors backdrop-blur-xl group md:col-span-2 lg:col-span-1">
+                            <div className="p-3 md:p-4 bg-accent/10 rounded-2xl text-accent group-hover:scale-110 transition-transform"><MapPin size={24} className="md:w-7 md:h-7" /></div>
                             <div>
-                                <h3 className="text-xl font-black text-white mb-1 uppercase tracking-tight">Deployment Base</h3>
-                                <p className="text-gray-400 font-light text-sm leading-relaxed">
+                                <h3 className="text-lg md:text-xl font-black text-white mb-1 uppercase tracking-tight">Deployment Base</h3>
+                                <p className="text-gray-400 font-light text-xs md:text-sm leading-relaxed">
                                     Hill Town Impressa Shop No.516, 5th Floor,<br />
-                                    Opp. Parikh Hospital, Nr. Suvas Scala,<br />
                                     Gangotri Circle Road, Nikol, Ahmedabad-382350,<br />
                                     Gujarat, India.
                                 </p>

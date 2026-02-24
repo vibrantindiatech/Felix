@@ -26,7 +26,7 @@ const Navbar = () => {
     ];
 
     return (
-        <nav className={`fixed w-full z-40 transition-all duration-300 ${isScrolled ? 'bg-primary/95 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`}>
+        <nav className={`fixed w-full z-[100] transition-all duration-300 ${isScrolled ? 'bg-primary/95 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'}`}>
             <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
                 {/* Logo - Synchronized Mission Branding */}
                 <NavLink to="/" className="flex flex-col items-start leading-none group transition-all duration-300">
@@ -42,7 +42,7 @@ const Navbar = () => {
                 </NavLink>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex items-center space-x-8">
+                <div className="hidden lg:flex items-center space-x-8">
                     {navLinks.map((link) => (
                         <NavLink
                             key={link.title}
@@ -57,7 +57,7 @@ const Navbar = () => {
                 </div>
 
                 {/* CTA Button */}
-                <div className="hidden md:block">
+                <div className="hidden lg:block">
                     <NavLink
                         to="/contact"
                         className="px-6 py-2 border border-accent text-accent hover:bg-accent hover:text-primary transition-all duration-300 rounded text-sm uppercase tracking-wide font-medium"
@@ -67,7 +67,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile Menu Toggle */}
-                <div className="md:hidden">
+                <div className="lg:hidden">
                     <button onClick={() => setIsOpen(!isOpen)} className="text-white hover:text-accent transition-colors">
                         {isOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
@@ -76,7 +76,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Overlay */}
             {isOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-primary border-t border-gray-800 shadow-xl py-4 flex flex-col items-center space-y-6 animate-fadeIn">
+                <div className="lg:hidden absolute top-full left-0 w-full bg-primary border-t border-gray-800 shadow-xl py-4 flex flex-col items-center space-y-6 animate-fadeIn">
                     {navLinks.map((link) => (
                         <NavLink
                             key={link.title}

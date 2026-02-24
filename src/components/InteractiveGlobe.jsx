@@ -2,7 +2,8 @@ import React, { useRef, useMemo, useState, Suspense } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Stars, OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
-import { TrendingUp, MousePointer2, Plane, Clock, Sparkles } from 'lucide-react';
+import { TrendingUp, MousePointer2, Plane, Clock, Sparkles, Plus, Minus, Play, Pause, Compass } from 'lucide-react';
+import gsap from 'gsap';
 
 // Coordinate converter for precise 3D placement
 const latLongToVector3 = (lat, lon, radius) => {
@@ -17,7 +18,6 @@ const latLongToVector3 = (lat, lon, radius) => {
 
 const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
     const [hovered, setHovered] = useState(false);
-    // Position markers slightly above the surface
     const pos = useMemo(() => latLongToVector3(country.lat, country.lon, 2.05), [country]);
 
     return (
@@ -30,13 +30,11 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                 onSelect(country);
             }}
         >
-            {/* Click Hitbox */}
             <mesh>
                 <sphereGeometry args={[0.2, 16, 16]} />
                 <meshBasicMaterial transparent opacity={0} visible={false} />
             </mesh>
 
-            {/* Glowing Core Point */}
             <mesh scale={hovered || isSelected ? 1.8 : 1.2}>
                 <sphereGeometry args={[0.045, 32, 32]} />
                 <meshStandardMaterial
@@ -46,13 +44,11 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                 />
             </mesh>
 
-            {/* Vertical HUD Anchor Line */}
             <mesh position={[0, 0.15, 0]}>
                 <cylinderGeometry args={[0.005, 0.005, 0.3, 8]} />
                 <meshBasicMaterial color="#d4af37" opacity={0.6} transparent />
             </mesh>
 
-            {/* Premium HUD Label & Hover Box */}
             <Html
                 distanceFactor={7}
                 position={[0, 0.45, 0]}
@@ -61,7 +57,7 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                     pointerEvents: 'auto',
                     transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
                     opacity: hideLabels ? 0 : 1,
-                    zIndex: hovered || isSelected ? 200 : 10
+                    zIndex: hovered || isSelected ? 50 : 10
                 }}
             >
                 <div
@@ -79,12 +75,10 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                         document.body.style.cursor = 'auto';
                     }}
                 >
-                    {/* SLIM Hover Insight Portal (Small Box) */}
                     <div
-                        className={`absolute bottom-full mb-10 w-72 overflow-hidden rounded-[2.5rem] border border-accent/40 shadow-[0_40px_120px_rgba(0,0,0,1)] backdrop-blur-3xl transition-all duration-500 origin-bottom
+                        className={`absolute bottom-full mb-10 w-64 sm:w-72 md:w-80 overflow-hidden rounded-[2.5rem] border border-accent/40 shadow-[0_40px_120px_rgba(0,0,0,1)] backdrop-blur-3xl transition-all duration-500 origin-bottom
                             ${hovered ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-10'}`}
                     >
-                        {/* Image Background */}
                         <div className="absolute inset-0 z-0 h-[80px]">
                             <img
                                 src={country.image}
@@ -94,9 +88,7 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                             <div className="absolute inset-0 bg-gradient-to-b from-[#0b1b36]/40 via-[#0b1b36]/90 to-[#0b1b36]"></div>
                         </div>
 
-                        {/* Content Overlay - SLIMMED */}
                         <div className="relative z-10 p-5 pt-12 flex flex-col items-center text-center">
-                            {/* Circular Flag Badge */}
                             <div className="absolute top-6 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full border-4 border-[#0b1b36] overflow-hidden shadow-2xl bg-[#0b1b36]">
                                 <img
                                     src={`https://flagcdn.com/w160/${country.id === 'uk' ? 'gb' : country.id}.png`}
@@ -110,7 +102,7 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                                 <span className="text-accent text-[8px] font-black uppercase tracking-widest">ACTIVE HUB</span>
                             </div>
 
-                            <h4 className="text-xl font-black text-white tracking-[0.1em] uppercase mb-3 drop-shadow-xl">{country.name}</h4>
+                            <h4 className="text-lg sm:text-xl font-black text-white tracking-[0.1em] uppercase mb-3 drop-shadow-xl">{country.name}</h4>
 
                             <div className="grid grid-cols-2 gap-4 w-full pt-5 border-t border-white/10 mt-2">
                                 <div className="flex flex-col items-center">
@@ -128,11 +120,9 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                             </div>
                         </div>
 
-                        {/* Decorative HUD Accent */}
                         <div className="h-1 w-full bg-accent"></div>
                     </div>
 
-                    {/* Base Label (Static) */}
                     <div
                         className={`flex items-center gap-3 px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-500 shadow-2xl border whitespace-nowrap
                             ${isSelected ? 'bg-accent text-primary border-white ring-8 ring-accent/10' :
@@ -148,7 +138,6 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                         {(isSelected || hovered) && <div className="w-1.5 h-1.5 rounded-full bg-primary animate-ping ml-1"></div>}
                     </div>
 
-                    {/* Connector Triangle for hover box */}
                     {hovered && (
                         <div className="absolute bottom-[48px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-accent/40 drop-shadow-2xl z-[101]"></div>
                     )}
@@ -163,12 +152,12 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
     const cloudsRef = useRef();
 
     const textures = useLoader(THREE.TextureLoader, [
-        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_atmos_2048.jpg', // Day Map
-        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_normal_2048.jpg', // Normal
-        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_specular_2048.jpg', // Specular
-        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_clouds_1024.png', // Clouds
-        'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2400&auto=format&fit=crop', // Starfield
-        'https://threejs.org/examples/textures/planets/earth_lights_2048.png' // Night Lights
+        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_atmos_2048.jpg',
+        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_normal_2048.jpg',
+        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_specular_2048.jpg',
+        'https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/planets/earth_clouds_1024.png',
+        'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2400&auto=format&fit=crop',
+        'https://threejs.org/examples/textures/planets/earth_lights_2048.png'
     ]);
 
     const [colorMap, normalMap, specularMap, cloudsMap, milkyWayMap, nightLightsMap] = textures;
@@ -182,12 +171,11 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
         }
     });
 
-    // Atmosphere Shader Material - Adjusted for more 'visible' brightness
     const atmosphereMaterial = useMemo(() => new THREE.ShaderMaterial({
         transparent: true,
         side: THREE.BackSide,
         uniforms: {
-            glowColor: { value: new THREE.Color('#00aaff') }, // Brighter Blue
+            glowColor: { value: new THREE.Color('#00aaff') },
             viewVector: { value: new THREE.Vector3(0, 0, 1) }
         },
         vertexShader: `
@@ -211,19 +199,11 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
 
     return (
         <group>
-            {/* Background Galaxy - Slightly brighter for depth */}
             <mesh scale={[-150, -150, -150]}>
                 <sphereGeometry args={[1, 64, 64]} />
-                <meshBasicMaterial
-                    map={milkyWayMap}
-                    side={THREE.BackSide}
-                    opacity={0.4}
-                    transparent
-                    color="#222222"
-                />
+                <meshBasicMaterial map={milkyWayMap} side={THREE.BackSide} opacity={0.4} transparent color="#222222" />
             </mesh>
 
-            {/* Earth Body - High Performance Cinematic Material with Brighter Lights */}
             <mesh ref={meshRef}>
                 <sphereGeometry args={[2, 128, 128]} />
                 <meshStandardMaterial
@@ -234,37 +214,26 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
                     roughness={0.6}
                     metalness={0.2}
                     emissiveMap={nightLightsMap}
-                    emissive={new THREE.Color('#FFECB3')} // Warmer, brighter lights
+                    emissive={new THREE.Color('#FFECB3')}
                     emissiveIntensity={2.5}
                 />
             </mesh>
 
-            {/* Clouds */}
             <mesh ref={cloudsRef}>
                 <sphereGeometry args={[2.04, 128, 128]} />
-                <meshPhongMaterial
-                    map={cloudsMap}
-                    transparent={true}
-                    opacity={0.35}
-                    depthWrite={false}
-                    color="#ffffff"
-                    shininess={0}
-                />
+                <meshPhongMaterial map={cloudsMap} transparent={true} opacity={0.35} depthWrite={false} color="#ffffff" shininess={0} />
             </mesh>
 
-            {/* Custom Atmosphere Shader Layer - The 'Pop' Factor */}
             <mesh scale={[1.15, 1.15, 1.15]}>
                 <sphereGeometry args={[2.1, 128, 128]} />
                 <primitive object={atmosphereMaterial} attach="material" />
             </mesh>
 
-            {/* Inner Glow scattering */}
             <mesh scale={[1.02, 1.02, 1.02]}>
                 <sphereGeometry args={[2, 64, 64]} />
                 <meshBasicMaterial color="#0088ff" transparent opacity={0.15} side={THREE.BackSide} />
             </mesh>
 
-            {/* Markers */}
             {countries.map(c => (
                 <Marker
                     key={c.id}
@@ -279,53 +248,68 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
 };
 
 const InteractiveGlobe = ({ countries, selectedCountry, onSelect }) => {
+    const [autoRotate, setAutoRotate] = useState(true);
+    const controlsRef = useRef();
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const cameraPosition = isMobile ? [0, 0, 10] : [0, 1, 7.5];
+
+    const handleZoom = (type) => {
+        if (!controlsRef.current) return;
+        const camera = controlsRef.current.object;
+        const currentDist = controlsRef.current.getDistance();
+        const targetDistance = type === 'in' ? Math.max(2.2, currentDist - 2) : Math.min(12, currentDist + 2);
+        gsap.to(camera.position, { z: targetDistance, duration: 1, ease: "power3.out" });
+    };
+
+    const resetView = () => {
+        if (!controlsRef.current) return;
+        setAutoRotate(true);
+        gsap.to(controlsRef.current.object.position, {
+            x: cameraPosition[0], y: cameraPosition[1], z: cameraPosition[2],
+            duration: 1.5, ease: "expo.inOut"
+        });
+    };
+
     return (
-        <div className="w-full h-full min-h-[600px] relative bg-black/10 rounded-[4rem]">
+        <div className="w-full h-full min-h-[500px] sm:min-h-[600px] relative bg-black/10 rounded-[3rem] sm:rounded-[4rem] group/globe touch-pan-y">
             <Canvas
                 gl={{ antialias: true, alpha: true, logarithmicDepthBuffer: true }}
-                camera={{ position: [0, 1, 7.5], fov: 35 }}
+                camera={{ position: cameraPosition, fov: 35 }}
                 shadows
-                style={{ overflow: 'visible' }}
+                style={{ overflow: 'visible', touchAction: 'pan-y' }}
             >
-                {/* Cinematic Lighting System - Increased Brighness */}
-                <ambientLight intensity={0.4} /> {/* Increased from 0.2 */}
-
-                {/* Main Sun Light (Key Light) */}
-                <directionalLight
-                    position={[10, 8, 5]}
-                    intensity={5}
-                    castShadow
-                />
-
-                {/* Atmosphere Rim Light (Fill) */}
-                <pointLight
-                    position={[-15, -10, -5]}
-                    intensity={3}
-                    color="#00aaff"
-                />
-
+                <ambientLight intensity={0.4} />
+                <directionalLight position={[10, 8, 5]} intensity={5} castShadow />
+                <pointLight position={[-15, -10, -5]} intensity={3} color="#00aaff" />
                 <Stars radius={250} depth={100} count={12000} factor={10} fade />
-
                 <Suspense fallback={null}>
-                    <GlobeMesh
-                        countries={countries}
-                        selectedCountry={selectedCountry}
-                        onSelect={onSelect}
-                    />
+                    <GlobeMesh countries={countries} selectedCountry={selectedCountry} onSelect={onSelect} />
                 </Suspense>
-
                 <OrbitControls
+                    ref={controlsRef}
                     enablePan={false}
                     enableZoom={true}
                     minDistance={2.2}
                     maxDistance={12}
                     rotateSpeed={0.5}
-                    autoRotate={true}
+                    autoRotate={autoRotate}
                     autoRotateSpeed={0.4}
                     enableDamping={true}
                     dampingFactor={0.05}
                 />
             </Canvas>
+
+            <div className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col bg-black/60 backdrop-blur-2xl border border-white/10 rounded-2xl p-1 shadow-2xl opacity-0 group-hover/globe:opacity-100 transition-opacity duration-500">
+                <button onClick={() => handleZoom('in')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Plus size={20} /></button>
+                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                <button onClick={() => handleZoom('out')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Minus size={20} /></button>
+                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                <button onClick={() => setAutoRotate(!autoRotate)} className={`p-4 transition-all ${autoRotate ? 'text-accent' : 'text-white/50'}`}>
+                    {autoRotate ? <Pause size={20} /> : <Play size={20} />}
+                </button>
+                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                <button onClick={resetView} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Compass size={20} /></button>
+            </div>
         </div>
     );
 };

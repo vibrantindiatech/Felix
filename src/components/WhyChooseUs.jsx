@@ -84,7 +84,7 @@ const WhyChooseUs = () => {
                             <img
                                 src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
                                 alt="Expert Consultant"
-                                className="w-full h-[600px] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
+                                className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent opacity-60"></div>
 

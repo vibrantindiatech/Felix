@@ -78,11 +78,11 @@ const Hero = () => {
             {/* REAL 3D EARTH GLOBE - Prominently Placed */}
             <div
                 ref={globeContainerRef}
-                className="absolute right-[-10%] md:right-[5%] lg:right-[10%] top-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] lg:w-[850px] lg:h-[850px] z-2 pointer-events-none drop-shadow-[0_0_50px_rgba(0,170,255,0.2)]"
+                className="absolute right-[-20%] sm:right-[-10%] md:right-[0%] lg:right-[10%] top-1/2 -translate-y-1/2 w-[350px] h-[350px] sm:w-[500px] sm:h-[500px] md:w-[600px] md:h-[600px] lg:w-[850px] lg:h-[850px] z-2 pointer-events-none drop-shadow-[0_0_50px_rgba(0,170,255,0.2)] opacity-40 sm:opacity-70 md:opacity-100 transition-opacity duration-1000"
             >
                 <Globe3D />
                 {/* Radial Glow around the globe */}
-                <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-[120px] -z-1"></div>
+                <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-[80px] md:blur-[120px] -z-1"></div>
             </div>
 
             {/* Glowing Highlights */}
@@ -90,44 +90,44 @@ const Hero = () => {
 
             {/* Content Container */}
             <div className="container mx-auto px-4 md:px-8 relative z-10 hero-content-inner">
-                <div className="max-w-3xl text-center md:text-left">
-                    <div ref={badgeRef} className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-10 shadow-2xl">
+                <div className="max-w-4xl text-center md:text-left">
+                    <div ref={badgeRef} className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl mb-6 md:mb-10 shadow-2xl">
                         <span className="flex h-2.5 w-2.5 rounded-full bg-accent animate-pulse shadow-[0_0_10px_#d4af37]"></span>
                         <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-accent">98.7% Visa Approval Success</span>
                     </div>
 
-                    <h1 ref={titleRef} className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-8 leading-[1.05] tracking-tight">
+                    <h1 ref={titleRef} className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-6 md:mb-8 leading-[1.05] tracking-tight">
                         Your Global <br />
                         <span className="text-gradient drop-shadow-[0_0_40px_rgba(212,175,55,0.4)]">Journey Begins</span>
                     </h1>
 
-                    <p ref={subtitleRef} className="text-lg md:text-2xl text-gray-300 mb-12 max-w-xl font-light leading-relaxed">
+                    <p ref={subtitleRef} className="text-base sm:text-lg md:text-2xl text-gray-300 mb-8 md:mb-12 max-w-xl mx-auto md:mx-0 font-light leading-relaxed">
                         Navigate complex borders with Felix by Sagar. Expertly engineered immigration solutions for <span className="text-white font-medium border-b border-accent/30 pb-1">Study, Work, and Permanent Residency</span>.
                     </p>
 
                     <div ref={ctaRef} className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start">
-                        <Link to="/contact" className="px-10 py-5 bg-accent text-primary font-bold text-sm rounded-2xl hover:bg-white transition-all shadow-[0_15px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.45)] hover:-translate-y-1.5 flex items-center justify-center uppercase tracking-[0.2em] group">
+                        <Link to="/contact" className="px-8 md:px-10 py-4 md:py-5 bg-accent text-primary font-black text-xs md:text-sm rounded-2xl hover:bg-white transition-all shadow-[0_15px_30px_rgba(212,175,55,0.25)] hover:shadow-[0_20px_45px_rgba(212,175,55,0.45)] hover:-translate-y-1.5 flex items-center justify-center uppercase tracking-[0.2em] group">
                             Start Application
                             <ArrowRight size={18} className="ml-2 transform group-hover:translate-x-1.5 transition-transform" />
                         </Link>
-                        <Link to="/services" className="px-10 py-5 bg-white/5 border border-white/10 text-white font-bold text-sm rounded-2xl hover:bg-white/10 transition-all backdrop-blur-xl flex items-center justify-center uppercase tracking-[0.2em] shadow-xl">
+                        <Link to="/services" className="px-8 md:px-10 py-4 md:py-5 bg-white/5 border border-white/10 text-white font-bold text-xs md:text-sm rounded-2xl hover:bg-white/10 transition-all backdrop-blur-xl flex items-center justify-center uppercase tracking-[0.2em] shadow-xl">
                             Explore Services
                         </Link>
                     </div>
 
                     {/* Trust Indicators */}
-                    <div className="mt-20 flex flex-wrap items-center gap-8 justify-center md:justify-start opacity-70">
-                        <div className="flex items-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
+                    <div className="mt-12 md:mt-20 flex flex-wrap items-center gap-6 md:gap-8 justify-center md:justify-start opacity-70">
+                        <div className="flex items-center gap-3 text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
                             <div className="p-2 bg-white/5 rounded-lg group-hover:bg-accent/10 transition-colors">
                                 <ShieldCheck size={18} className="text-accent" />
                             </div> Certified Experts
                         </div>
-                        <div className="flex items-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
+                        <div className="flex items-center gap-3 text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
                             <div className="p-2 bg-white/5 rounded-lg group-hover:bg-accent/10 transition-colors">
                                 <Globe size={18} className="text-accent" />
                             </div> 50+ Countries
                         </div>
-                        <div className="flex items-center gap-3 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
+                        <div className="flex items-center gap-3 text-[9px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/80 group cursor-default">
                             <div className="p-2 bg-white/5 rounded-lg group-hover:bg-accent/10 transition-colors">
                                 <Zap size={18} className="text-accent" />
                             </div> Rapid Processing
