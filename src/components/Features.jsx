@@ -99,7 +99,7 @@ const Features = () => {
             <div className="container mx-auto px-4 md:px-6 relative z-10">
                 <div ref={headerRef} className="text-center mb-16">
                     <span className="text-accent text-sm uppercase tracking-[0.3em] font-bold mb-4 block">World-Class Solutions</span>
-                    <h2 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+                    <h2 className="text-6xl md:text-9xl font-heading font-black text-white mb-6 uppercase tracking-tighter leading-none">
                         Visa <span className="text-gradient">Categories</span>
                     </h2>
                     <p className="text-gray-400 max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">

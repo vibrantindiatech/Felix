@@ -119,7 +119,7 @@ const WhyUsPage = () => {
 
             <section ref={heroRef} className="container mx-auto px-4 md:px-6 text-center mb-24 relative z-10">
                 <span className="text-accent text-sm uppercase tracking-widest font-bold mb-4 block">The Felix Standard</span>
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold text-white mb-6">
+                <h1 className="text-6xl md:text-9xl font-heading font-black text-white mb-6 uppercase tracking-tighter leading-none">
                     Engineering Your <span className="text-gradient">Global Future</span>
                 </h1>
                 <p className="text-gray-400 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">

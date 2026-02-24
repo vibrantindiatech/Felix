@@ -94,7 +94,7 @@ const Services = () => {
             <section className="container mx-auto px-4 md:px-6 py-12 md:py-24 text-center">
                 <div ref={headerRef}>
                     <span className="text-accent text-sm uppercase tracking-widest font-bold mb-4 block">Our Expertise</span>
-                    <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+                    <h1 className="text-6xl md:text-9xl font-heading font-black text-white mb-6 uppercase tracking-tighter leading-none">
                         Comprehensive <span className="text-gradient">Visa Solutions</span>
                     </h1>
                     <p className="text-gray-400 max-w-3xl mx-auto text-lg md:text-xl font-light leading-relaxed">
