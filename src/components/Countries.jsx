@@ -91,107 +91,94 @@ const Countries = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            // Main Pinning Timeline - Strictly NO SCALE for the globe
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: ".world-reach-pin",
-                    start: "top top",
-                    end: "+=150%",
-                    pin: true,
-                    scrub: 1,
-                    anticipatePin: 1
-                }
-            });
-
-            // Stage 1: Header Subtle Move (Globe remains fixed size)
-            tl.to(".reach-header", { opacity: 0.3, y: -50, duration: 1 })
-
-            // Stage 2: Intelligence cards slide in from bottom
-            tl.fromTo(".intelligence-overlay",
-                { y: "100%", opacity: 0 },
-                { y: "0%", opacity: 1, duration: 2, ease: "none" }
+        if (selectedCountry) {
+            gsap.fromTo(detailRef.current,
+                { y: 100, opacity: 0, scale: 0.9, filter: 'blur(20px)' },
+                { y: 0, opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.7, ease: "expo.out" }
             );
-
-        }, containerRef);
-
-        return () => ctx.revert();
-    }, []);
+        }
+    }, [selectedCountry]);
 
     const handleRedirect = () => {
         navigate('/contact', { state: { targetCountry: selectedCountry.name } });
     };
 
     return (
-        <section ref={containerRef} className="bg-[#010611] relative overflow-hidden">
-            {/* Pinning Global Container */}
-            <div className="world-reach-pin h-screen w-full relative overflow-hidden flex flex-col items-center justify-center">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.05)_0%,_transparent_70%)] pointer-events-none"></div>
+        <section ref={containerRef} className="py-24 bg-[#010611] relative overflow-x-hidden min-h-[1300px] flex flex-col items-center">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(212,175,55,0.05)_0%,_transparent_70%)] pointer-events-none"></div>
 
-                {/* Fixed Background Content during pin */}
-                <div className="container mx-auto px-4 md:px-6 text-center reach-header mb-12 relative z-10">
-                    <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-accent/10 border border-accent/20 mb-6">
-                        <Sparkles className="text-accent" size={16} />
-                        <span className="text-accent text-[10px] font-bold uppercase tracking-[0.5em]">Global Network</span>
-                    </div>
-                    <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black text-white tracking-tighter uppercase leading-[0.8] drop-shadow-2xl">
-                        World <span className="text-gradient">Reach</span>
-                    </h2>
+            <div className="container mx-auto px-4 md:px-6 mb-16 text-center relative z-10">
+                <div className="inline-flex items-center gap-4 px-6 py-2 rounded-full bg-accent/10 border border-accent/20 mb-8">
+                    <Sparkles className="text-accent" size={16} />
+                    <span className="text-accent text-[10px] font-bold uppercase tracking-[0.5em]">Global Network</span>
+                </div>
+                <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-heading font-black text-white mb-12 tracking-tighter uppercase leading-[0.8] drop-shadow-2xl">
+                    World <span className="text-gradient">Reach</span>
+                </h2>
+                <p className="text-gray-400 max-w-3xl mx-auto text-xl font-light leading-relaxed mb-12">
+                    Hover over a <span className="text-white font-medium">Country Node</span> on the interactive globe to preview intelligence or explore the primary base below.
+                </p>
+            </div>
+
+            {/* Interactive Globe Hub - Optimized Height for All Devices */}
+            <div className="relative w-full max-w-screen-2xl h-[350px] xs:h-[400px] sm:h-[500px] md:h-[600px] lg:h-[750px] z-20 flex items-center justify-center mb-16 sm:mb-24 mt-8 sm:mt-12 md:mt-16 lg:mt-24">
+                <div className="w-full h-full relative pt-4 sm:pt-8 md:pt-12 lg:pt-20">
+                    <InteractiveGlobe
+                        countries={countriesData}
+                        selectedCountry={selectedCountry}
+                        onSelect={setSelectedCountry}
+                    />
+                </div>
+            </div>
+
+            {/* Country Intelligence Grid */}
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 box-intelligence">
+                <div className="text-center mb-12 sm:mb-16">
+                    <h3 className="text-2xl sm:text-3xl font-heading font-black text-white mb-4 uppercase tracking-tighter">Sector Intelligence Base</h3>
+                    <div className="h-[2px] w-24 bg-accent mx-auto"></div>
                 </div>
 
-                {/* Interactive Globe Hub - Central during pin (Fixed size) */}
-                <div className="relative w-full max-w-screen-2xl h-[400px] sm:h-[550px] md:h-[650px] lg:h-[750px] z-20 flex items-center justify-center globe-hub">
-                    <div className="w-full h-full relative">
-                        <InteractiveGlobe
-                            countries={countriesData}
-                            selectedCountry={selectedCountry}
-                            onSelect={setSelectedCountry}
-                        />
-                    </div>
-                </div>
-
-                {/* SLIDING LAYER: Intelligence Cards that cover the globe during pin */}
-                <div className="absolute inset-0 z-30 intelligence-overlay pointer-events-none">
-                    <div className="w-full h-full pt-[25vh] pb-[10vh] overflow-y-auto pointer-events-auto custom-scrollbar bg-gradient-to-t from-[#010611] via-[#010611]/90 to-transparent">
-                        <div className="container mx-auto px-4 sm:px-6">
-                            <div className="text-center mb-16">
-                                <h3 className="text-3xl sm:text-5xl font-heading font-black text-white mb-6 uppercase tracking-tighter">Sector Intelligence Base</h3>
-                                <div className="h-[2px] w-32 bg-accent mx-auto"></div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+                    {countriesData.map((country, index) => (
+                        <div
+                            key={index}
+                            onClick={() => setSelectedCountry(country)}
+                            className="group relative bg-[#0b1b36] border border-white/5 hover:border-accent/40 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden transition-all duration-500 cursor-pointer shadow-3xl hover:-translate-y-4 flex flex-col"
+                        >
+                            <div className="h-48 sm:h-56 relative overflow-hidden">
+                                <img
+                                    src={country.image}
+                                    alt={country.name}
+                                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1b36] via-[#0b1b36]/20 to-transparent"></div>
+                                <div className="absolute top-4 left-4">
+                                    <div className="flex items-center gap-2 px-3 py-1 bg-black/40 backdrop-blur-md rounded-full border border-white/10">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></div>
+                                        <span className="text-[8px] font-black text-white uppercase tracking-widest">Active Hub</span>
+                                    </div>
+                                </div>
+                                <div className="absolute bottom-5 left-6 sm:left-8">
+                                    <h4 className="text-2xl sm:text-3xl font-heading font-black text-white tracking-widest leading-none drop-shadow-2xl">{country.name}</h4>
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto pb-32">
-                                {countriesData.map((country, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => setSelectedCountry(country)}
-                                        className="group relative bg-[#0b1b36]/80 backdrop-blur-2xl border border-white/5 hover:border-accent/40 rounded-[2.5rem] overflow-hidden transition-all duration-500 cursor-pointer shadow-3xl hover:-translate-y-4 flex flex-col h-[400px]"
-                                    >
-                                        <div className="h-44 relative overflow-hidden">
-                                            <img src={country.image} alt={country.name} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-[#0b1b36] to-transparent"></div>
-                                            <div className="absolute bottom-5 left-6">
-                                                <h4 className="text-2xl font-heading font-black text-white tracking-widest uppercase">{country.name}</h4>
-                                            </div>
-                                        </div>
-                                        <div className="p-8 flex flex-col flex-grow">
-                                            <p className="text-xs text-gray-400 font-light leading-relaxed mb-6 line-clamp-3 leading-loose">
-                                                {country.description}
-                                            </p>
-                                            <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                                                <div className="flex flex-col text-white">
-                                                    <span className="text-[7px] uppercase tracking-widest font-black text-accent/50">Success Ratio</span>
-                                                    <span className="text-xl font-bold">{country.success}</span>
-                                                </div>
-                                                <div className="w-12 h-12 rounded-2xl bg-accent text-primary flex items-center justify-center shadow-lg group-hover:rotate-45 transition-all">
-                                                    <ArrowRight size={20} />
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div className="p-6 sm:p-8 flex flex-col flex-grow">
+                                <p className="text-[10px] sm:text-[11px] text-gray-400 font-light leading-relaxed mb-6 sm:mb-8 line-clamp-2 flex-grow">
+                                    {country.description}
+                                </p>
+                                <div className="flex items-center justify-between pt-4 sm:pt-6 border-t border-white/5">
+                                    <div className="flex flex-col">
+                                        <span className="text-accent/50 text-[7px] sm:text-[8px] uppercase tracking-widest font-bold">Success Ratio</span>
+                                        <span className="text-white font-black text-lg sm:text-xl tracking-tighter">{country.success}</span>
                                     </div>
-                                ))}
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/5 flex items-center justify-center text-white group-hover:bg-accent group-hover:text-primary transition-all shadow-2xl group-hover:rotate-45">
+                                        <ArrowRight size={18} />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </div>
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useState, Suspense } from 'react';
+import React, { useRef, useMemo, useState, Suspense, useEffect } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { Stars, OrbitControls, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -66,81 +66,49 @@ const Marker = ({ country, onSelect, isSelected, hideLabels }) => {
                         e.stopPropagation();
                         onSelect(country);
                     }}
-                    onMouseEnter={() => {
-                        setHovered(true);
-                        document.body.style.cursor = 'pointer';
-                    }}
-                    onMouseLeave={() => {
-                        setHovered(false);
-                        document.body.style.cursor = 'auto';
-                    }}
                 >
                     <div
                         className={`absolute bottom-full mb-10 w-64 sm:w-72 md:w-80 overflow-hidden rounded-[2.5rem] border border-accent/40 shadow-[0_40px_120px_rgba(0,0,0,1)] backdrop-blur-3xl transition-all duration-500 origin-bottom
                             ${hovered ? 'scale-100 opacity-100 translate-y-0' : 'scale-75 opacity-0 translate-y-10'}`}
                     >
                         <div className="absolute inset-0 z-0 h-[80px]">
-                            <img
-                                src={country.image}
-                                alt={country.name}
-                                className="w-full h-full object-cover opacity-60 mix-blend-overlay"
-                            />
+                            <img src={country.image} alt={country.name} className="w-full h-full object-cover opacity-60 mix-blend-overlay" />
                             <div className="absolute inset-0 bg-gradient-to-b from-[#0b1b36]/40 via-[#0b1b36]/90 to-[#0b1b36]"></div>
                         </div>
 
                         <div className="relative z-10 p-5 pt-12 flex flex-col items-center text-center">
                             <div className="absolute top-6 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full border-4 border-[#0b1b36] overflow-hidden shadow-2xl bg-[#0b1b36]">
-                                <img
-                                    src={`https://flagcdn.com/w160/${country.id === 'uk' ? 'gb' : country.id}.png`}
-                                    alt={country.name}
-                                    className="w-full h-full object-cover scale-150"
-                                />
+                                <img src={`https://flagcdn.com/w160/${country.id === 'uk' ? 'gb' : country.id}.png`} alt={country.name} className="w-full h-full object-cover scale-150" />
                             </div>
-
                             <div className="flex items-center gap-1.5 mb-2 bg-accent/20 px-2.5 py-1 rounded-full border border-accent/30">
                                 <Sparkles size={11} className="text-accent" />
                                 <span className="text-accent text-[8px] font-black uppercase tracking-widest">ACTIVE HUB</span>
                             </div>
-
-                            <h4 className="text-lg sm:text-xl font-black text-white tracking-[0.1em] uppercase mb-3 drop-shadow-xl">{country.name}</h4>
-
+                            <h4 className="text-lg sm:text-xl font-black text-white tracking-[0.1em] uppercase mb-3">{country.name}</h4>
                             <div className="grid grid-cols-2 gap-4 w-full pt-5 border-t border-white/10 mt-2">
                                 <div className="flex flex-col items-center">
-                                    <span className="text-[10px] text-accent font-black uppercase tracking-widest mb-2 font-heading">Success</span>
-                                    <span className="text-base font-black text-white leading-none whitespace-nowrap">{country.success}</span>
+                                    <span className="text-[10px] text-accent font-black tracking-widest mb-1">SUCCESS</span>
+                                    <span className="text-sm font-black text-white">{country.success}</span>
                                 </div>
                                 <div className="flex flex-col items-center border-l border-white/10">
-                                    <span className="text-[10px] text-accent font-black uppercase tracking-widest mb-2 font-heading">Timeline</span>
-                                    <span className="text-base font-black text-white leading-none whitespace-nowrap">{country.processingTime}</span>
+                                    <span className="text-[10px] text-accent font-black tracking-widest mb-1">TIME</span>
+                                    <span className="text-sm font-black text-white">{country.processingTime}</span>
                                 </div>
                             </div>
-
-                            <div className="mt-4 flex items-center justify-center gap-2 text-[8px] text-accent font-black uppercase tracking-[0.2em] opacity-80">
-                                <MousePointer2 size={10} className="animate-pulse" /> ACCESS INTEL
-                            </div>
                         </div>
-
                         <div className="h-1 w-full bg-accent"></div>
                     </div>
 
                     <div
                         className={`flex items-center gap-3 px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-[0.25em] transition-all duration-500 shadow-2xl border whitespace-nowrap
                             ${isSelected ? 'bg-accent text-primary border-white ring-8 ring-accent/10' :
-                                hovered ? 'bg-accent text-primary border-white scale-110 shadow-[0_0_30px_rgba(212,175,55,0.4)]' :
+                                hovered ? 'bg-accent text-primary border-white scale-110' :
                                     'bg-[#0b1b36]/90 text-white/90 backdrop-blur-xl border-white/20'}`}
                     >
-                        <img
-                            src={`https://flagcdn.com/w40/${country.id === 'uk' ? 'gb' : country.id}.png`}
-                            alt={country.name}
-                            className="w-5 h-3.5 object-cover rounded shadow-lg"
-                        />
-                        <span className="drop-shadow-sm">{country.name}</span>
+                        <img src={`https://flagcdn.com/w40/${country.id === 'uk' ? 'gb' : country.id}.png`} alt={country.name} className="w-5 h-3.5 object-cover rounded" />
+                        <span>{country.name}</span>
                         {(isSelected || hovered) && <div className="w-1.5 h-1.5 rounded-full bg-primary animate-ping ml-1"></div>}
                     </div>
-
-                    {hovered && (
-                        <div className="absolute bottom-[48px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[10px] border-t-accent/40 drop-shadow-2xl z-[101]"></div>
-                    )}
                 </div>
             </Html>
         </group>
@@ -163,38 +131,15 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
     const [colorMap, normalMap, specularMap, cloudsMap, milkyWayMap, nightLightsMap] = textures;
 
     useFrame((state, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.y += delta * 0.05;
-        }
-        if (cloudsRef.current) {
-            cloudsRef.current.rotation.y += delta * 0.06;
-        }
+        if (meshRef.current) meshRef.current.rotation.y += delta * 0.05;
+        if (cloudsRef.current) cloudsRef.current.rotation.y += delta * 0.06;
     });
 
     const atmosphereMaterial = useMemo(() => new THREE.ShaderMaterial({
-        transparent: true,
-        side: THREE.BackSide,
-        uniforms: {
-            glowColor: { value: new THREE.Color('#00aaff') },
-            viewVector: { value: new THREE.Vector3(0, 0, 1) }
-        },
-        vertexShader: `
-            varying float intensity;
-            void main() {
-                vec3 vNormal = normalize( normalMatrix * normal );
-                vec3 vNormel = normalize( normalMatrix * vec3(0.0, 0.0, 1.0) );
-                intensity = pow( 0.75 - dot(vNormal, vNormel), 4.2 );
-                gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-            }
-        `,
-        fragmentShader: `
-            uniform vec3 glowColor;
-            varying float intensity;
-            void main() {
-                vec3 glow = glowColor * intensity;
-                gl_FragColor = vec4( glow, intensity );
-            }
-        `
+        transparent: true, side: THREE.BackSide,
+        uniforms: { glowColor: { value: new THREE.Color('#00aaff') }, viewVector: { value: new THREE.Vector3(0, 0, 1) } },
+        vertexShader: `varying float intensity; void main() { vec3 vNormal = normalize( normalMatrix * normal ); vec3 vNormel = normalize( normalMatrix * vec3(0.0, 0.0, 1.0) ); intensity = pow( 0.75 - dot(vNormal, vNormel), 4.2 ); gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 ); }`,
+        fragmentShader: `uniform vec3 glowColor; varying float intensity; void main() { vec3 glow = glowColor * intensity; gl_FragColor = vec4( glow, intensity ); }`
     }), []);
 
     return (
@@ -203,55 +148,37 @@ const GlobeMesh = ({ countries, selectedCountry, onSelect }) => {
                 <sphereGeometry args={[1, 64, 64]} />
                 <meshBasicMaterial map={milkyWayMap} side={THREE.BackSide} opacity={0.4} transparent color="#222222" />
             </mesh>
-
             <mesh ref={meshRef}>
                 <sphereGeometry args={[2, 128, 128]} />
-                <meshStandardMaterial
-                    map={colorMap}
-                    normalMap={normalMap}
-                    normalScale={new THREE.Vector2(1.5, 1.5)}
-                    roughnessMap={specularMap}
-                    roughness={0.6}
-                    metalness={0.2}
-                    emissiveMap={nightLightsMap}
-                    emissive={new THREE.Color('#FFECB3')}
-                    emissiveIntensity={2.5}
-                />
+                <meshStandardMaterial map={colorMap} normalMap={normalMap} normalScale={new THREE.Vector2(1.5, 1.5)} roughnessMap={specularMap} roughness={0.6} metalness={0.2} emissiveMap={nightLightsMap} emissive={new THREE.Color('#FFECB3')} emissiveIntensity={2.5} />
             </mesh>
-
             <mesh ref={cloudsRef}>
                 <sphereGeometry args={[2.04, 128, 128]} />
                 <meshPhongMaterial map={cloudsMap} transparent={true} opacity={0.35} depthWrite={false} color="#ffffff" shininess={0} />
             </mesh>
-
             <mesh scale={[1.15, 1.15, 1.15]}>
                 <sphereGeometry args={[2.1, 128, 128]} />
                 <primitive object={atmosphereMaterial} attach="material" />
             </mesh>
-
-            <mesh scale={[1.02, 1.02, 1.02]}>
-                <sphereGeometry args={[2, 64, 64]} />
-                <meshBasicMaterial color="#0088ff" transparent opacity={0.15} side={THREE.BackSide} />
-            </mesh>
-
-            {countries.map(c => (
-                <Marker
-                    key={c.id}
-                    country={c}
-                    onSelect={onSelect}
-                    isSelected={selectedCountry?.id === c.id}
-                    hideLabels={!!selectedCountry}
-                />
-            ))}
+            {countries.map(c => <Marker key={c.id} country={c} onSelect={onSelect} isSelected={selectedCountry?.id === c.id} hideLabels={!!selectedCountry} />)}
         </group>
     );
 };
 
 const InteractiveGlobe = ({ countries, selectedCountry, onSelect }) => {
     const [autoRotate, setAutoRotate] = useState(true);
+    const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
     const controlsRef = useRef();
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const cameraPosition = isMobile ? [0, 0, 10] : [0, 1, 7.5];
+    const cameraPosition = [0, 0.8, 8.5];
+
+    useEffect(() => {
+        const checkScreen = () => {
+            setIsMobileOrTablet(window.innerWidth < 1024);
+        };
+        checkScreen();
+        window.addEventListener('resize', checkScreen);
+        return () => window.removeEventListener('resize', checkScreen);
+    }, []);
 
     const handleZoom = (type) => {
         if (!controlsRef.current) return;
@@ -264,22 +191,18 @@ const InteractiveGlobe = ({ countries, selectedCountry, onSelect }) => {
     const resetView = () => {
         if (!controlsRef.current) return;
         setAutoRotate(true);
-        gsap.to(controlsRef.current.object.position, {
-            x: cameraPosition[0], y: cameraPosition[1], z: cameraPosition[2],
-            duration: 1.5, ease: "expo.inOut"
-        });
+        gsap.to(controlsRef.current.object.position, { x: cameraPosition[0], y: cameraPosition[1], z: cameraPosition[2], duration: 1.5, ease: "expo.inOut" });
     };
 
     return (
-        <div className="w-full h-full min-h-[500px] sm:min-h-[600px] relative bg-black/10 rounded-[3rem] sm:rounded-[4rem] group/globe touch-pan-y">
+        <div className="w-full h-full relative rounded-[3rem] sm:rounded-[4rem] group/globe touch-pan-y overflow-hidden">
             <Canvas
                 gl={{ antialias: true, alpha: true, logarithmicDepthBuffer: true }}
-                camera={{ position: cameraPosition, fov: 35 }}
-                shadows
+                camera={{ position: cameraPosition, fov: 38 }}
                 style={{ overflow: 'visible', touchAction: 'pan-y' }}
             >
                 <ambientLight intensity={0.4} />
-                <directionalLight position={[10, 8, 5]} intensity={5} castShadow />
+                <directionalLight position={[10, 8, 5]} intensity={5} />
                 <pointLight position={[-15, -10, -5]} intensity={3} color="#00aaff" />
                 <Stars radius={250} depth={100} count={12000} factor={10} fade />
                 <Suspense fallback={null}>
@@ -288,7 +211,8 @@ const InteractiveGlobe = ({ countries, selectedCountry, onSelect }) => {
                 <OrbitControls
                     ref={controlsRef}
                     enablePan={false}
-                    enableZoom={true}
+                    // STRICTLY DISABLE ZOOM ON MOBILE AND TABLET TO STOP SCROLL INTERFERENCE
+                    enableZoom={!isMobileOrTablet}
                     minDistance={2.2}
                     maxDistance={12}
                     rotateSpeed={0.5}
@@ -299,17 +223,20 @@ const InteractiveGlobe = ({ countries, selectedCountry, onSelect }) => {
                 />
             </Canvas>
 
-            <div className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col bg-black/60 backdrop-blur-2xl border border-white/10 rounded-2xl p-1 shadow-2xl opacity-0 group-hover/globe:opacity-100 transition-opacity duration-500">
-                <button onClick={() => handleZoom('in')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Plus size={20} /></button>
-                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
-                <button onClick={() => handleZoom('out')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Minus size={20} /></button>
-                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
-                <button onClick={() => setAutoRotate(!autoRotate)} className={`p-4 transition-all ${autoRotate ? 'text-accent' : 'text-white/50'}`}>
-                    {autoRotate ? <Pause size={20} /> : <Play size={20} />}
-                </button>
-                <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
-                <button onClick={resetView} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90"><Compass size={20} /></button>
-            </div>
+            {/* Tactical Switch Panel - Desktop Only */}
+            {!isMobileOrTablet && (
+                <div className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-4 opacity-0 group-hover/globe:opacity-100 transition-opacity duration-500">
+                    <div className="flex flex-col bg-black/60 backdrop-blur-2xl border border-white/10 rounded-2xl p-1 shadow-2xl">
+                        <button onClick={() => handleZoom('in')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90" title="Focus In"><Plus size={22} /></button>
+                        <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                        <button onClick={() => handleZoom('out')} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90" title="Zoom Out"><Minus size={22} /></button>
+                        <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                        <button onClick={() => setAutoRotate(!autoRotate)} className={`p-4 transition-all active:scale-90 ${autoRotate ? 'text-accent' : 'text-white/50 hover:text-accent'}`} title="Rotate Hub">{autoRotate ? <Pause size={22} /> : <Play size={22} />}</button>
+                        <div className="h-[1px] w-8 bg-white/10 mx-auto"></div>
+                        <button onClick={resetView} className="p-4 text-white/50 hover:text-accent transition-all active:scale-90" title="Reset Sensor"><Compass size={22} /></button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
