@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin, ArrowRight, Send } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin, ArrowRight, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 
@@ -24,10 +24,8 @@ const Footer = () => {
     }, []);
 
     const socialLinks = [
-        { icon: <Facebook size={18} />, href: "#" },
-        { icon: <Twitter size={18} />, href: "#" },
-        { icon: <Instagram size={18} />, href: "#" },
-        { icon: <Linkedin size={18} />, href: "#" }
+        { icon: <Instagram size={18} />, href: "https://www.instagram.com/felixbysagar/" },
+        { icon: <Facebook size={18} />, href: "https://www.facebook.com/share/1KqyfvbKd6/" }
     ];
 
     return (
@@ -55,6 +53,8 @@ const Footer = () => {
                                 <a
                                     key={index}
                                     href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-accent hover:border-accent hover:text-primary transition-all duration-300 hover:-translate-y-1"
                                 >
                                     {social.icon}
